@@ -1,4 +1,5 @@
 const express = require("express");
+const format = require("date-format");
 console.log("Node js is running");
 
 const PORT = 4000 || process.env.PORT;
@@ -14,7 +15,7 @@ app.get("/api/v1/instagram", (req, res) => {
     userName: "bhaveshSingh",
     followers: 66,
     follows: 89,
-    date: Date.now(),
+    date: format.asString("dd[MM]- hh:mm:ss", new Date()),
   };
 
   res.status(200).json({ instaSocial });
@@ -24,7 +25,7 @@ app.get("/api/v1/facebook", (req, res) => {
     name: "facebookAccount",
     followers: 530,
     follows: 330,
-    date: new Date(),
+    date: format.asString("dd[MM]:- hh:mm:ss", new Date()),
   };
 
   res.status(200).send({ instaSocial });
@@ -34,10 +35,15 @@ app.get("/api/v1/linkedIn", (req, res) => {
     name: "linkedInAccount",
     followers: 350,
     follows: 304,
-    date: new Date(),
+    date: format.asString("dd[MM]:yyyy- hh:mm:ss", new Date()),
   };
 
   res.status(200).send({ instaSocial });
+});
+
+app.get("/api/v1/:token", (req, res) => {
+  console.log(req.params.token);
+  res.status(200).json({ param: req.params.token });
 });
 
 app.listen(PORT, () => {
